@@ -21,4 +21,4 @@ import 'controllers' // Stimulus
 import 'import/bootstrap'
 import 'import/eva_icons'
 import 'import/mediaelement'
-// import 'import/gridstackjs'
+import 'import/gridstackjs'
