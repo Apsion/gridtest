@@ -1,0 +1,127 @@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gridstack@0.6.3/dist/gridstack.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/gridstack@0.6.3/dist/gridstack.all.js"></script>
+
+
+  <div class="d-flex min-vh-95 ">
+
+    <div class="flex-grow-1 my-md-auto">
+      <div class="grid-stack">
+
+        <div id="A" class="landing-page grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="12" data-gs-height="2">
+          <div class="grid-stack-item-content">
+            <trix-editor input="A" class="trix-content-compact"></trix-editor>
+          </div>
+        </div>
+
+        <div id="B" class="grid-stack-item ui-draggable ui-resizable ui-resizable-autohide" data-gs-x="0" data-gs-y="4" data-gs-width="4" data-gs-height="5">
+          <div class="grid-stack-item-content ui-draggable-handle">
+            <p>B</p>
+          </div>
+        </div>
+
+        <div id="grid_layout" class="grid-stack-item" data-gs-x="4" data-gs-y="4" data-gs-width="4" data-gs-height="2">
+          <div class="grid-stack-item-content">
+          <textarea id="grid_layout_content" name="grid_layout_content"
+            rows="25" cols="15">
+            It was a dark and stormy night...
+          </textarea>
+          </div>
+        </div>
+      </div>
+  </div>
+
+<script>
+  // for gridstack
+  var dataset = [
+  {
+    "id": "A",
+    "x": 0,
+    "y": 0,
+    "width": 9,
+    "height": 2
+  },
+  {
+    "id": "B",
+    "x": 1,
+    "y": 3,
+    "width": 2,
+    "height": 2
+  },
+  {
+    "id": "grid_layout",
+    "x": 9,
+    "y": 0,
+    "width": 3,
+    "height": 5
+  }
+]
+
+  var options = {
+		float: true,
+    animate: true,
+    verticalMargin: 0,
+    cellHeight: 'auto',
+    cellHeightUnit: 'px'
+  }
+  var grid = $('.grid-stack')
+    .gridstack(options)
+    .data('gridstack')
+
+  // .serializeArray()
+  setTimeout(function() {
+    move(grid, dataset)
+  }, 0)
+
+  move = function(grid, stored) {
+    stored = GridStackUI.Utils.sort(stored, 1, 12)
+    $.each(stored, function(key, node) {
+      el = $('#' + node.id)
+      $('.log').append(
+        $('<p></p>').text(
+          'Moving #' + node.id + ' to ' + 'x:' + node.x + ' y:' + node.y
+        )
+      )
+      grid.update(el, node.x, node.y, node.width, node.height)
+    })
+  }
+
+  $('.grid-stack').on('change', function(event, items) {
+    saveGrid()
+  })
+
+  saveGrid = function () {
+    serializedData = $('.grid-stack > .grid-stack-item:visible')
+      .map(function(i, el) {
+        el = $(el)
+        var node = el.data('_gridstack_node')
+        return {
+          id: $(el).attr('id'),
+          x: node.x,
+          y: node.y,
+          width: node.width,
+          height: node.height
+        }
+      })
+      .toArray()
+    $('#grid_layout_content').val(JSON.stringify(serializedData, null, '  '))
+  }
+</script>
+
+<style>
+  .grid-stack {
+    /* background: lightgoldenrodyellow; */
+  }
+
+  .grid-stack-item-content {
+    background-color: rgba(72, 158, 249, 0.03);
+    border: 2px dashed rgba(72, 158, 249, 0.2);
+    padding: 20px;
+  }
+
+  trix-toolbar {
+    /* display: none; */
+    /* position: fixed;
+    top: 60px;
+    z-index: 1; */
+  }
+</style>
