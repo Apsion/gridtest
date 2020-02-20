@@ -1,24 +1,11 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Using GridStack CDN everything works
+Tried to use GridStack through Webpacker generates
+Uncaught ReferenceError: GridStackUI is not defined
 
-Things you may want to cover:
+This commit is using the CDN and works
+https://github.com/Apsion/gridtest/commit/237e1441a2a0dacea3b251c6e19e679c80c1a379
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This commit is using webpacker and fails
+https://github.com/Apsion/gridtest/commit/ec6d0f40f44a515caf88567b8cbf188031aed596
